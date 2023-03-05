@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { addUser, getIOU, getUsers } from "../../services/user.services";
+import { addUser, deleteUser, getUsers } from "../../services/user.services";
 
 const router = express.Router();
 
@@ -9,15 +9,14 @@ router.get("/", async (req: Request, res: Response) => {
 });
 
 router.post("/add", async (req: Request, res: Response) => {
-  console.log("a");
-
-  const user = await addUser(req.body); // add req.body as an argument
-  res.send(user);
+  const data = await addUser(req.body); // add req.body as an argument
+  // let data = req.body;
+  res.send(JSON.stringify(data));
 });
 
-router.post("/iou", async (req: Request, res: Response) => {
-  const user = await getIOU(req.body); // add req.body as an argument
-  res.send(user);
+router.delete("/delete", async (req: Request, res: Response) => {
+  const data = await deleteUser(req.body.id); // add req.body as an argument
+  res.send(JSON.stringify(data));
 });
 
 export default router;

@@ -1,16 +1,30 @@
-let data = require("../routes/data/userData.json");
-const fs = require("fs");
+import * as fs from "fs";
+import path from "path";
+interface User {
+  name: string;
+  owes: { [key: string]: number } | [];
+  owed_by: { [key: string]: number } | [];
+  balance: number;
+}
+
+interface Users {
+  users: User[];
+}
+const filePath = path.join(__dirname, "userData.json");
 export const getUsers = () => {
-  return data.users;
+  return JSON.parse(fs.readFileSync(filePath, "utf8"));
 };
 
 export const addUser = (user: any) => {
+  const data = JSON.parse(fs.readFileSync(filePath, "utf8"));
   data.users.push(user);
-  fs.writeFileSync("./routes/data/userData.json", JSON.stringify(data)); // write updated data back to file
-  return data.users;
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 1), "utf8");
+  return JSON.parse(fs.readFileSync(filePath, "utf8"));
 };
 
-export const getIOU = (iou: string) => {
-  console.log(iou);
-  return iou;
+export const deleteUser = (userToDelete: string) => {
+  const data: Users = JSON.parse(fs.readFileSync(filePath, "utf8"));
+  data.users = data.users.filter((user) => user.name !== userToDelete);
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf8");
+  return JSON.parse(fs.readFileSync(filePath, "utf8"));
 };
