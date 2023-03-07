@@ -1,21 +1,3 @@
 {
- "users": [
-  {
-   "name": "two",
-   "owes": [],
-   "owed_by": [],
-   "balance": 0
-  },
-  {
-   "name": "קררר",
-   "owes": [],
-   "owed_by": [],
-   "balance": 0
-  },
-  {},
-  {
-   "name": "yossi",
-   "balance": "55"
-  }
- ]
+  "users": []
 }
